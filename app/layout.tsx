@@ -45,7 +45,7 @@ export default function RootLayout({
             closeButton
             richColors
             expand={false}
-            theme="light" // or "dark", "system"
+            theme="light" 
             />
           </ThemeProvider>
         

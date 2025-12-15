@@ -21,8 +21,8 @@ const Navbar = () => {
             </Link>
             <div className="flex items-center gap-4">
                 <Link className={buttonVariants({variant:"ghost"})} href={"/"}>Home</Link>
-                <Link className={buttonVariants({variant:"ghost"})} href={"/b;og"}>Blog</Link>
-                <Link className={buttonVariants({variant:"ghost"})} href={"/"}>Creat</Link>
+                <Link className={buttonVariants({variant:"ghost"})} href={"/blog"}>Blog</Link>
+                <Link className={buttonVariants({variant:"ghost"})} href={"/create"}>Creat</Link>
             </div>
         </div>
         <div className="flex items-center gap-4 mr-4">
