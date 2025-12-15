@@ -6,8 +6,11 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
+import z from "zod"
 
 export default function SignUp() {
+  
   const form=useForm({
     resolver:zodResolver(signUpSchema),
     defaultValues:{
@@ -16,8 +19,12 @@ export default function SignUp() {
       password:""
     }
   })
-  const onHandleSubmit=()=>{
-    console.log("handle it")
+  const onHandleSubmit=async(data:z.infer<typeof signUpSchema>)=>{
+    await authClient.signUp.email({
+      email:data.email,
+      name:data.name,
+      password:data.password
+    })
   }
   return (
     <>
