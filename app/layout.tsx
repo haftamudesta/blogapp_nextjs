@@ -40,7 +40,13 @@ export default function RootLayout({
                 {children}
               </ConvexClientProvider>
             </main>
-            <Toaster closeButton />
+            <Toaster 
+            position="top-center"
+            closeButton
+            richColors
+            expand={false}
+            theme="light" // or "dark", "system"
+            />
           </ThemeProvider>
         
       </body>
