@@ -6,7 +6,7 @@ export const createPost = mutation({
   args: { title: v.string(),body:v.string() },
   
   handler: async (ctx, args) => {
-    const user=await authComponent.safeGetAuthUser(ctx)
+    const user=await authComponent.safeGetAuthUser(ctx)//return the current user or null if the user is not found
     if(!user){
         throw new ConvexError("Not authenticated")
     }
