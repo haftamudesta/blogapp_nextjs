@@ -12,9 +12,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useTransition } from "react";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function createPostPage(){
     const mutation=useMutation(api.posts.createPost)
+    const [isPending, startTransition] = useTransition();
+    const router=useRouter()
     const form=useForm({
         resolver:zodResolver(postSchema),
         defaultValues:{
@@ -23,9 +29,13 @@ export default function createPostPage(){
         }
       })
       const onSubmit=(values:z.infer<typeof postSchema>)=>{
-        mutation({
+        startTransition(()=>{
+            mutation({
             title:values.title,
             body:values.content
+        })
+        toast.success("Post Created successfully1")
+        router.push("/")
         })
       }
     return (
@@ -69,7 +79,18 @@ export default function createPostPage(){
                             )}
                             </Field>
                            )} />
-                           <Button>Create Post</Button>
+                           <button 
+                type="submit" 
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                disabled={isPending}
+              >
+                {isPending?(
+                    <>
+                    <Loader2 className="size-4 animate-spin" />
+                    <span>Loading...</span>
+                    </>):
+                    (<span>Create Post</span>)}
+              </button>
                         </FieldGroup>
                     </form>
                 </CardContent>
