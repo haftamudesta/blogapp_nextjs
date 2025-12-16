@@ -19,13 +19,13 @@ export default function createPostPage(){
         resolver:zodResolver(postSchema),
         defaultValues:{
           title:"",
-          body:""
+          content:""
         }
       })
       const onSubmit=(values:z.infer<typeof postSchema>)=>{
         mutation({
             title:values.title,
-            body:values.body
+            content:values.content
         })
       }
     return (
@@ -34,7 +34,7 @@ export default function createPostPage(){
                 <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl underline-offset-4">
                     Create Post
                 </h1>
-                <p className="text-xl text-muted-foreground mt-2">
+                <p className="text-xl text-muted-foreground mt-4 mb-4">
                     Share your thoughts, ideas, and expertise with us.
                 </p>
             </div>
@@ -60,7 +60,7 @@ export default function createPostPage(){
                             </Field>
                            )} />
 
-                           <Controller name="body" control={form.control} render={({field,fieldState})=>(
+                           <Controller name="content" control={form.control} render={({field,fieldState})=>(
                                 <Field>
                                 <FieldLabel>Content</FieldLabel>
                                 <Textarea aria-invalid={fieldState.invalid} placeholder="Enter your content" {...field} />
