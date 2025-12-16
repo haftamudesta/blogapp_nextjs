@@ -25,7 +25,7 @@ export default function createPostPage(){
       const onSubmit=(values:z.infer<typeof postSchema>)=>{
         mutation({
             title:values.title,
-            content:values.content
+            body:values.content
         })
       }
     return (
