@@ -16,6 +16,7 @@ import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { createBlogAction } from "@/app/actions";
 
 export default function createPostPage(){
     const mutation=useMutation(api.posts.createPost)
@@ -29,13 +30,10 @@ export default function createPostPage(){
         }
       })
       const onSubmit=(values:z.infer<typeof postSchema>)=>{
-        startTransition(()=>{
-            mutation({
-            title:values.title,
-            body:values.content
-        })
-        toast.success("Post Created successfully1")
-        router.push("/")
+        startTransition(async()=>{
+            console.log("running on server side...")
+        await createBlogAction(values)
+
         })
       }
     return (
