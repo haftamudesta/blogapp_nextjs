@@ -7,6 +7,7 @@ import { api } from "@/convex/_generated/api";
 import { redirect } from "next/navigation";
 import { getToken } from "@/lib/auth-server";
 
+
 export async function createBlogAction(valuess:z.infer<typeof postSchema>){
     const parsed=postSchema.safeParse(valuess)
     if(!parsed.success){
@@ -19,3 +20,4 @@ export async function createBlogAction(valuess:z.infer<typeof postSchema>){
     },{token})
     return redirect("/")
 }
+
