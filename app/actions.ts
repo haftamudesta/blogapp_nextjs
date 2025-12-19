@@ -10,12 +10,13 @@ import { error } from "console";
 
 
 export async function createBlogAction(valuess:z.infer<typeof postSchema>){
-    const parsed=postSchema.safeParse(valuess)
+    
+    try {
+        const parsed=postSchema.safeParse(valuess)
     if(!parsed.success){
         throw new Error("Some thing want wrong!!")
     }
     const token=await getToken();
-    try {
         const imageUrl=await fetchMutation(api.posts.generateImageUploadUrl,{},{token});
         const uploadResult=await fetch(imageUrl,{
             method:"POST",
@@ -34,12 +35,10 @@ export async function createBlogAction(valuess:z.infer<typeof postSchema>){
             imageStorageId:storageId
         },{token})
     } catch (error) {
-        
+        return{
+                error:"Failed to create post"
+            }
     }
-    await fetchMutation(api.posts.createPost,{
-        body:parsed.data?.content,
-        title:parsed.data?.title,
-    },{token})
     return redirect("/")
 }
 
