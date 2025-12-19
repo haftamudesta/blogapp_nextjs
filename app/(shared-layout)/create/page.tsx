@@ -5,16 +5,13 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { authClient } from "@/lib/auth-client";
 import z from "zod"
 import { postSchema } from "@/app/schemas/blog";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { createBlogAction } from "@/app/actions";
 
@@ -26,7 +23,8 @@ export default function createPostPage(){
         resolver:zodResolver(postSchema),
         defaultValues:{
           title:"",
-          content:""
+          content:"",
+          image:undefined
         }
       })
       const onSubmit=(values:z.infer<typeof postSchema>)=>{
@@ -77,6 +75,25 @@ export default function createPostPage(){
                             )}
                             </Field>
                            )} />
+
+                           <Controller name="image" control={form.control} render={({field,fieldState})=>(
+                                <Field>
+                                <FieldLabel>Image</FieldLabel>
+                                <Input aria-invalid={fieldState.invalid} placeholder="Enter your content" 
+                                type="file"
+                                accept="image/*"
+                                onChange={(event)=>{
+                                    const file=event.target.files?.[0]
+                                    field.onChange(file)
+                                }}
+                                 />
+                                {fieldState.invalid && (
+                                <FieldError errors={[fieldState.error]} />
+                            )}
+                            </Field>
+                           )} />
+
+
                            <button 
                 type="submit" 
                 className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
