@@ -7,9 +7,11 @@ import { Id } from "@/convex/_generated/dataModel";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
 
+interface postIdProps{
+    params:Promise<{postId:Id<"posts">}>
+}
 
-
-export default async function PostDetail(){
+export default async function PostDetail({params}:postIdProps){
     
     return (
         <main className="max-w-3xs mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
