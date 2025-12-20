@@ -36,7 +36,7 @@ return (
             {data?.map((post)=>(
                 <Card key={post._id}>
                     <div className="relative h-48 w-full overflow-hidden">
-                        <Image src={post.imageUrl ?? "/images/javascript.png"} alt="Image"
+                        <Image src={post.imageUrl ?? "/images/javascript.png"} alt={post.title}
                         fill
                         className="pt-0 object-cover"
                         />

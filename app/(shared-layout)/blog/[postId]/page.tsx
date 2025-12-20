@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Id } from "@/convex/_generated/dataModel";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
+import { Separator } from "@/components/ui/separator";
 
 interface postIdProps{
     params:Promise<{postId:Id<"posts">}>
@@ -20,7 +21,7 @@ export default async function PostDetail({params}:postIdProps){
         )
     }
     return (
-        <main className="max-w-3xs mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
+        <main className="max-w-3xl mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
             <Link href="/blog" className={cn(
         buttonVariants({ variant: "ghost" }),
         "gap-2", 
@@ -38,8 +39,22 @@ export default async function PostDetail({params}:postIdProps){
             <ArrowLeft className="size-4" />
             <span>Go to Blogs</span>
             </Link>
-            <div className="w-full relative `h-400px` mb-4 rounded-xl overflow-hidden shadow-sm">
+            <div className="w-full relative h-100 mb-4 rounded-xl overflow-hidden shadow-sm">
+                <Image src={post.imageUrl ??"/images/javascript.png"} alt={post.title}
+                fill
+                className="object-cover hover:scale-120 transition-transform duration-300"
+                priority 
+                />
             </div>
+            <div className="space-y-4 flex flex-col">
+                <h1 className="text-5xl font-bold tracking-tight text-foreground">{post.title}</h1>
+                <p className="text-sm text-muted-foreground">Posted on {new Date(post._creationTime).toLocaleDateString()}</p>
+            </div>
+            <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+            <p className="text-lg leading-relaxed text-foreground/95">
+            {post.body}
+            </p>
+            <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
         </main>
     )
 }
