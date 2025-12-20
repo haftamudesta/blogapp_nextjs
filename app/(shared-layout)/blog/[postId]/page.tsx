@@ -7,6 +7,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
 import { Separator } from "@/components/ui/separator";
+import CommentSection from "@/components/web/CommentSection";
 
 interface postIdProps{
     params:Promise<{postId:Id<"posts">}>
@@ -14,7 +15,8 @@ interface postIdProps{
 
 export default async function PostDetail({params}:postIdProps){
     const {postId}=await params
-    const post=await fetchQuery(api.posts.getPostById,{postId:postId})
+    const post=await fetchQuery(api.posts.getPostById,{postId:postId});
+    // let comments=await fetchQuery(api.comments.getCommentsByPostId,{postId:postId})
     if(!post){
         return(
             <h1 className="text-4xl animate-pulse">Post Not Found</h1>
@@ -55,6 +57,7 @@ export default async function PostDetail({params}:postIdProps){
             {post.body}
             </p>
             <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+            <CommentSection />
         </main>
     )
 }
