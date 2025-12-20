@@ -3,8 +3,14 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Id } from "@/convex/_generated/dataModel";
+import { fetchQuery } from "convex/nextjs";
+import { api } from "@/convex/_generated/api";
 
-export default function PostDetail(){
+
+
+export default async function PostDetail(){
+    
     return (
         <main className="max-w-3xs mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
             <Link href="/blog" className={cn(
