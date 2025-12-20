@@ -16,17 +16,8 @@ import z from "zod";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-interface iAppProps{
-  comments:{
-    id: Id<"comments">;
-    _creationTime: number;
-    postId: Id<"posts">;
-    body: string;
-    autherId: string;
-    autherName: string;
-  }
-}
 const CommentSection = () => {
    const params=useParams<{postId:Id<"posts">}>();
    const comments=useQuery(api.comments.getCommentsByPostId,{postId:params.postId})
@@ -59,7 +50,7 @@ const CommentSection = () => {
                   {comments?.length} comments
                 </h1>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-6">
               <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
                 <Controller name="body" control={form.control} render={({field,fieldState})=>(
               <Field>
@@ -83,6 +74,34 @@ const CommentSection = () => {
                     (<span>Add Comment</span>)}
               </Button>
               </form>
+              
+                {comments && comments.length > 0 && (
+                  <section className="space-y-6">
+                    {comments.map((comment) => (
+                      <div key={comment._id} className="flex gap-4">
+                        <Avatar className="size-10 shrink-0">
+                          <AvatarImage src={`https://avatar.vercel.sh/${comment.autherName}`} alt={comment.autherName}/>
+                          <AvatarFallback>
+                            {comment.autherName.slice(0,2).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 space-y-1">
+                          <div className="flex items-center justify-between">
+                            <p className="text-sm font-semibold">
+                              {comment.autherName.split(" ")[0]}
+                            </p>
+                            <p className="text-muted-foregroun text-sm">
+                              {new Date(comment._creationTime).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <p className="text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed">
+                            {comment.body}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </section>
+                )}
               
             </CardContent>
         </Card>
