@@ -7,7 +7,7 @@ export const createPost = mutation({
   args: { 
     title: v.string(),
     body:v.string(),
-    imageStorageId: v.id("_storage") },
+    imageStorageId: v.optional(v.id("_storage")) },
   
   handler: async (ctx, args) => {
     const user=await authComponent.safeGetAuthUser(ctx)//return the current user or null if the user is not found
@@ -28,7 +28,15 @@ export const getPost=query({
     args: {},
   handler: async(ctx) => {
     const posts=await ctx.db.query("posts").order("desc").collect()
-    return posts
+    return await Promise.all(
+      posts.map(async(post)=>{
+        const resolvedImageUrl=post.imageStorageId!==undefined?await ctx.storage.getUrl(post.imageStorageId):null
+        return {
+          ...post,
+          imageUrl:resolvedImageUrl,
+        }
+      })
+    )
   },
 })
 

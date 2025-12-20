@@ -36,7 +36,7 @@ return (
             {data?.map((post)=>(
                 <Card key={post._id}>
                     <div className="relative h-48 w-full overflow-hidden">
-                        <Image src="https://unsplash.com/photos/the-word-dream-with-colorful-wavy-distortion-ufCsTMUMlOM" alt="Image"
+                        <Image src={post.imageUrl ?? "https://unsplash.com/photos/people-relaxing-in-a-sunlit-lobby-with-large-windows-oT2RQPUDiFk"} alt="Image"
                         fill
                         />
                     </div>

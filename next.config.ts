@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
         hostname: "unsplash.com",  // Add this for direct unsplash.com URLs
         protocol: "https",
         port: ""
+      },
+      {
+        hostname: "helpful-wren-629.convex.cloud",  // Add this for direct unsplash.com URLs
+        protocol: "https",
+        port: ""
       }
     ]
   }
