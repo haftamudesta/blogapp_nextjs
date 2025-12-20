@@ -12,7 +12,13 @@ interface postIdProps{
 }
 
 export default async function PostDetail({params}:postIdProps){
-    
+    const {postId}=await params
+    const post=await fetchQuery(api.posts.getPostById,{postId:postId})
+    if(!post){
+        return(
+            <h1 className="text-4xl animate-pulse">Post Not Found</h1>
+        )
+    }
     return (
         <main className="max-w-3xs mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
             <Link href="/blog" className={cn(
