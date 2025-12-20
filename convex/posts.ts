@@ -50,3 +50,29 @@ export const generateImageUploadUrl=mutation({
     return await ctx.storage.generateUploadUrl()
   }
 })
+
+export const getPostById = query({
+  args: {
+    postId: v.id("posts")
+  },
+  handler: async (ctx, args) => {
+    try {
+      const post = await ctx.db.get(args.postId)
+      
+      if (!post) {
+        return null
+      }
+      
+      let resolvedImageUrl = null
+      if (post.imageStorageId !== undefined) {
+        resolvedImageUrl = await ctx.storage.getUrl(post.imageStorageId)
+      }
+      return {
+        ...post,
+        imageUrl: resolvedImageUrl
+      }
+    } catch (error) {
+      throw new Error("Failed to fetch post")
+    }
+  }
+})
