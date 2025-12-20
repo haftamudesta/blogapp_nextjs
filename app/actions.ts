@@ -6,7 +6,7 @@ import { postSchema } from "./schemas/blog";
 import { api } from "@/convex/_generated/api";
 import { redirect } from "next/navigation";
 import { getToken } from "@/lib/auth-server";
-import { error } from "console";
+import { revalidatePath } from "next/cache";
 
 
 export async function createBlogAction(valuess:z.infer<typeof postSchema>){
@@ -39,6 +39,7 @@ export async function createBlogAction(valuess:z.infer<typeof postSchema>){
                 error:"Failed to create post"
             }
     }
+    revalidatePath("/blog")
     return redirect("/")
 }
 

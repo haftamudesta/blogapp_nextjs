@@ -9,7 +9,7 @@ import { fetchQuery } from "convex/nextjs";
 import { Suspense } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
 
-export default function blogPost(){
+export default function BlogPost(){
     
     return(
        <main className="py-12">
@@ -36,8 +36,9 @@ return (
             {data?.map((post)=>(
                 <Card key={post._id}>
                     <div className="relative h-48 w-full overflow-hidden">
-                        <Image src={post.imageUrl ?? "https://unsplash.com/photos/people-relaxing-in-a-sunlit-lobby-with-large-windows-oT2RQPUDiFk"} alt="Image"
+                        <Image src={post.imageUrl ?? "/images/javascript.png"} alt="Image"
                         fill
+                        className="pt-0 object-cover"
                         />
                     </div>
                     <CardContent>
