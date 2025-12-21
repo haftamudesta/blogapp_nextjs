@@ -8,9 +8,22 @@ import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
 import { Separator } from "@/components/ui/separator";
 import CommentSection from "@/components/web/CommentSection";
+import { Metadata } from "next";
 
 interface postIdProps{
     params:Promise<{postId:Id<"posts">}>
+}
+
+export async function generateMetadata({params}:postIdProps):Promise<Metadata>{
+    const {postId}=await params;
+    const post=await fetchQuery(api.posts.getPostById,{postId:postId});
+    if(!post){
+        return {title:"Post not Found"}
+    }
+    return {
+        title:post.title,
+        description:post.body,
+    }
 }
 
 export default async function PostDetail({params}:postIdProps){
