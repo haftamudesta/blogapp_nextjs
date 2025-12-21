@@ -8,6 +8,15 @@ import Link from "next/link"
 import { fetchQuery } from "convex/nextjs";
 import { Suspense } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Metadata } from "next"
+
+export const metadata:Metadata={
+    title:"Blog Application | Nixtjs | Convex",
+    description:"Blog Application for sharing ideas thoghts",
+    category:"Web application",
+    authors:[{name:"Haftamu Desta"}]
+
+}
 
 export default function BlogPost(){
     
