@@ -9,6 +9,8 @@ import { api } from "@/convex/_generated/api";
 import { Separator } from "@/components/ui/separator";
 import CommentSection from "@/components/web/CommentSection";
 import { Metadata } from "next";
+import UserPresence from "@/components/web/UserPresence";
+import { getToken } from "@/lib/auth-server";
 
 interface postIdProps{
     params:Promise<{postId:Id<"posts">}>
@@ -28,7 +30,9 @@ export async function generateMetadata({params}:postIdProps):Promise<Metadata>{
 
 export default async function PostDetail({params}:postIdProps){
     const {postId}=await params
+    const token=await getToken()
     const post=await fetchQuery(api.posts.getPostById,{postId:postId});
+    const userId=await fetchQuery(api.presence.getUserId,{},{token})
     // let comments=await fetchQuery(api.comments.getCommentsByPostId,{postId:postId})
     if(!post){
         return(
@@ -63,7 +67,10 @@ export default async function PostDetail({params}:postIdProps){
             </div>
             <div className="space-y-4 flex flex-col">
                 <h1 className="text-5xl font-bold tracking-tight text-foreground">{post.title}</h1>
-                <p className="text-sm text-muted-foreground">Posted on {new Date(post._creationTime).toLocaleDateString()}</p>
+                <div className="flex items-center gap-2">
+                    <p className="text-sm text-muted-foreground">Posted on {new Date(post._creationTime).toLocaleDateString()}</p>
+                     {userId && (<UserPresence roomId={post._id} userId={userId} />)} 
+                </div>
             </div>
             <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
             <p className="text-lg leading-relaxed text-foreground/95">
