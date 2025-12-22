@@ -9,6 +9,7 @@ import { api } from "@/convex/_generated/api";
 import { Separator } from "@/components/ui/separator";
 import CommentSection from "@/components/web/CommentSection";
 import { Metadata } from "next";
+import UserPresence from "@/components/web/UserPresence";
 
 interface postIdProps{
     params:Promise<{postId:Id<"posts">}>
@@ -63,7 +64,10 @@ export default async function PostDetail({params}:postIdProps){
             </div>
             <div className="space-y-4 flex flex-col">
                 <h1 className="text-5xl font-bold tracking-tight text-foreground">{post.title}</h1>
-                <p className="text-sm text-muted-foreground">Posted on {new Date(post._creationTime).toLocaleDateString()}</p>
+                <div>
+                    <p className="text-sm text-muted-foreground">Posted on {new Date(post._creationTime).toLocaleDateString()}</p>
+                    {/* <UserPresence /> */}
+                </div>
             </div>
             <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
             <p className="text-lg leading-relaxed text-foreground/95">
