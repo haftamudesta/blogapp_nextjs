@@ -11,6 +11,7 @@ import CommentSection from "@/components/web/CommentSection";
 import { Metadata } from "next";
 import UserPresence from "@/components/web/UserPresence";
 import { getToken } from "@/lib/auth-server";
+import { redirect } from "next/navigation";
 
 interface postIdProps{
     params:Promise<{postId:Id<"posts">}>
@@ -39,6 +40,9 @@ export default async function PostDetail({params}:postIdProps){
         return(
             <h1 className="text-4xl animate-pulse">Post Not Found</h1>
         )
+    }
+    if(!userId){
+       return redirect("/auth/login")
     }
     return (
         <main className="max-w-3xl mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
