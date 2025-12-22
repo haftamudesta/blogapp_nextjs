@@ -31,6 +31,7 @@ export async function generateMetadata({params}:postIdProps):Promise<Metadata>{
 export default async function PostDetail({params}:postIdProps){
     const {postId}=await params
     const token=await getToken()
+    console.log(token)
     const post=await fetchQuery(api.posts.getPostById,{postId:postId});
     const userId=await fetchQuery(api.presence.getUserId,{},{token})
     // let comments=await fetchQuery(api.comments.getCommentsByPostId,{postId:postId})
